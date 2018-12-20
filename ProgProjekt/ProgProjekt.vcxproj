@@ -115,6 +115,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\houseconstants.h" />
+    <ClInclude Include="..\houseManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\houseManager.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
