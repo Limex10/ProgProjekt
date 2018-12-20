@@ -1,6 +1,6 @@
 /*
 * File: houseManager.h
-* Version: 1.2
+* Version: 1.1
 * Last modified on Tue Nov 28 2018 by CaAn
 * -----------------------------------------------------
 * This interface provides the basic functions for the house game
@@ -12,7 +12,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "houseconstants.h"
 
 struct houseMap {
 	int width;
@@ -22,11 +21,15 @@ struct houseMap {
 };
 
 typedef struct houseMap MapT;
-typedef unsigned char * ustring;
 
-#define HIGHOFFSET 10  //Should not be lower than 10
-#define LOWOFFSET 5 //Should not be lower than 5
-#define MAXWALLSEPARATION 3 //Do not change this value
+#define HIGHOFFSET 10
+#define LOWOFFSET 5
+#define MAXWALLSEPARATION 3
+#define OUTERWALL 'e'
+#define INNERWALL 'w'
+#define DOOR 'D'
+#define MAINENTRANCE 'M'
+#define EMPTYSPACE ' '
 
 /********************************************************************
 Function: CreateMap()
@@ -35,30 +38,12 @@ Usage: Mapt theMap = createMap(width,heigth,noOfWalls);
 Purpose: Creates the map including surrounding walls and the inner walls
 Also places doors and main entrance. Each door will receive a key nearby
 the door.
-Arguments:The functions takes three arguments: the width, the heigth and
-the number of inner walls.It returns a structure with a pointer to a two
-dimensional array. The structure also has the size of the array i.e.
+Arguments:The functions takes three arguments: the width, the heigth and 
+the number of inner walls.It returns a structure with a pointer to a two 
+dimensional array. The structure also has the size of the array i.e. 
 width and heigth of the house.
 ********************************************************************/
 MapT createMap(int width, int heigth, int noOfWalls);
-
-/********************************************************************
-Function: checkMapSize()
-Usage: checkMapSize(MapT *);
----------------------------------------------------------------------
-Purpose: Checks if the size of the map is sufficiently large. If the
-size is to small (rows and columns) it will force thw minimum size
-********************************************************************/
-void checkMapSize(MapT *map);
-
-/********************************************************************
-Function: initiateMatrix()
-Usage: initiateMatrix(MapT *);
----------------------------------------------------------------------
-Purpose: Allocates the memory for the two-dimensional array's of the
-map
-********************************************************************/
-void createMatrix(MapT *map);
 
 /********************************************************************
 Function: drawMap()
@@ -79,28 +64,13 @@ Arguments: The functions takes the map-structure as a parameter.
 void drawMapVisibility(MapT theMap);
 
 /********************************************************************
-Function: freeMap()
-Usage: freeMap(theMap);
----------------------------------------------------------------------
-Purpose: Free the allocated memory for the array's containing the map
-Arguments: The functions takes the map-structure as a parameter.
-********************************************************************/
-void freeMap(MapT theMap);
-
-
-
-/********************************************************************
-***************** Static functions **********************************
-********************************************************************/
-
-/********************************************************************
 Function: adjustValue()
 Usage: ---
 ---------------------------------------------------------------------
 Purpose: A helper function that finds if a value exists already in the
 array passed to the function. The value will be added to the array if
 value is not in the array and not adjacent to any other value.
-The purpose in this application is to prohibit that inner walls are to
+The purpose in this application is to prohibit that inner walls are to 
 close to each other, thereby avoiding narrow passages or rooms.
 The functions takes a search-value, an array and it's size as parameters.
 The return-value will be:
@@ -111,34 +81,10 @@ This is a helper function used by createMap-function.
 static int adjustValue(int *pValues, int noOfValues, int searchValue);
 
 /********************************************************************
-Function: initMap()
-Usage: ---
----------------------------------------------------------------------
-Purpose: Fill the map with initial values
-********************************************************************/
-static void initMap(MapT theMap);
-
-/********************************************************************
-Function: placeWalls()
-Usage: ---
----------------------------------------------------------------------
-Purpose: Place walls inside the map
-********************************************************************/
-static void placeWalls(MapT theMap, int noOfWalls);
-
-/********************************************************************
-Function: placeMainEntrance()
-Usage: ---
----------------------------------------------------------------------
-Purpose: Place main entrance on one of the outerwalls
-********************************************************************/
-static void placeMainEntrance(MapT theMap);
-
-/********************************************************************
 Function: placeDoors()
 Usage: ---
 ---------------------------------------------------------------------
-Purpose: Places doors on the drawn map.
+Purpose: Places doors on the drawn map. 
 Arguments: The functions takes the map-structure as a parameter.
 This is a helper function used by createMap-function.
 ********************************************************************/
@@ -161,12 +107,20 @@ Function: ti()
 Usage: ---
 ---------------------------------------------------------------------
 Purpose: Mirrors the map.
-Arguments: The functions takes the map-index as a parameter, and returns
+Arguments: The functions takes the map-index as a parameter, and returns 
 the mirrored index.
 This is a helper function used by getDoors-function.
 ********************************************************************/
 static int ti(int ind, int v, int s);
 
+/********************************************************************
+Function: freeMap()
+Usage: freeMap(theMap);
+---------------------------------------------------------------------
+Purpose: Free the allocated memory for the array's containing the map
+Arguments: The functions takes the map-structure as a parameter.
+********************************************************************/
+void freeMap(MapT theMap);
 
 #endif
 
