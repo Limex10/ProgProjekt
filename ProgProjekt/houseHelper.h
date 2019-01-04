@@ -66,4 +66,5 @@ values, otherwhise both are set to -1.
 inputT getUserInput(void);
 
 int  removeObject(MapT tMap, int row, int col, char chObj, positionT *pos, int visibility);
+int  keyChecker(MapT tMap, int row, int col, char chObj, positionT *pos, int visibility);
 #endif

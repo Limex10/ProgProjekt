@@ -29,6 +29,18 @@ int main(void)
 		{
 			placeObject(tMap, tPosition->row - 1, tPosition->col, '@', tPosition, 1);
 			removeObject(tMap, tPosition->row + 1, tPosition->col, ' ', tPosition, 1);
+			if (keyChecker(tMap, tPosition->row - 1, tPosition->col, '@', tPosition, 1) == 1)
+			{
+				
+				printf("du har hittat en nyckel");
+
+				getchar();
+				getchar();
+			}
+			
+			removeObject(tMap, tPosition->row + 1, tPosition->col, ' ', tPosition, 1);
+			
+			
 			
 			break;
 		}
@@ -38,6 +50,7 @@ int main(void)
 			
 			placeObject(tMap, tPosition->row , tPosition->col - 1, '@', tPosition, 1);
 			removeObject(tMap, tPosition->row, tPosition->col + 1, ' ', tPosition, 1);
+			keyChecker(tMap, tPosition->row, tPosition->col - 1, '@', tPosition, 1);
 
 			break;
 		}
@@ -46,19 +59,20 @@ int main(void)
 		{
 			placeObject(tMap, tPosition->row, tPosition->col + 1, '@', tPosition, 1);
 			removeObject(tMap, tPosition->row, tPosition->col - 1, ' ', tPosition, 1);
+			keyChecker(tMap, tPosition->row, tPosition->col + 1, '@', tPosition, 1);
 			break;
 		}
 		case 's':
 		{
 			placeObject(tMap, tPosition->row + 1, tPosition->col, '@', tPosition, 1);
 			removeObject(tMap, tPosition->row - 1, tPosition->col, ' ', tPosition, 1);
+			keyChecker(tMap, tPosition->row + 1, tPosition->col, '@', tPosition, 1);
 			break;
 		}
 
 		default:
 			break;
 		}
-
 
 
 		
