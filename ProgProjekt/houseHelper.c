@@ -22,6 +22,19 @@ int  placeObject(MapT tMap, int row, int col, char chObj, positionT *pos, int vi
 			col = rand() % (tMap.width - 2) + 1;
 		} 
 	}
+	if (tMap.mArr[row][col] == 'K')
+	{
+		tMap.mArr[row][col] = chObj;
+		tMap.vArr[row][col] = visibility;
+		pos->row = row;
+		pos->col = col;
+		return 'K';
+	}
+	if (tMap.mArr[row][col] == 'D')
+	{
+		
+		return 'D';
+	}
 	if (tMap.mArr[row][col] != ' ')
 		return 0;
 	tMap.mArr[row][col] = chObj;
@@ -50,8 +63,9 @@ int  removeObject(MapT tMap, int row, int col, char chObj, positionT *pos, int v
 	return 0;
 }
 
-int  keyChecker(MapT tMap, int row, int col, char chObj, positionT *pos, int visibility)
+int  doorMover(MapT tMap, int row, int col, char chObj, positionT *pos, int visibility)
 {
+
 	if (row < 0 || row > tMap.heigth - 1 || col < 0 || col > tMap.width - 1) //Outside housemap
 		return 0;
 	if (row == 0 && col == 0) { //Select random values for row and col
@@ -60,18 +74,12 @@ int  keyChecker(MapT tMap, int row, int col, char chObj, positionT *pos, int vis
 			col = rand() % (tMap.width - 2) + 1;
 		}
 	}
-	if (tMap.mArr[row][col] != 'K')
-		return 0;
-	else
-		/*
-			tMap.mArr[row][col] = chObj;
+
+	tMap.mArr[row][col] = chObj;
 	tMap.vArr[row][col] = visibility;
 	pos->row = row;
 	pos->col = col;
-		*/
-
-		printf("en nyckel");
-	return 1;
+	return 0;
 }
 
 
