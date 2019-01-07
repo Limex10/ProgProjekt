@@ -35,6 +35,16 @@ int  placeObject(MapT tMap, int row, int col, char chObj, positionT *pos, int vi
 		
 		return 'D';
 	}
+	if (tMap.mArr[row][col] == 'P')
+	{
+
+		return 'P';
+	}
+	if (tMap.mArr[row][col] == 'M')
+	{
+
+		return 'M';
+	}
 	if (tMap.mArr[row][col] != ' ')
 		return 0;
 	tMap.mArr[row][col] = chObj;

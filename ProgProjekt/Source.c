@@ -8,16 +8,31 @@ int main(void)
 	int walls = 10;
 	char door = ' ';
 	char key = ' ';
+	char points = ' ';
+	char master = ' ';
 	MapT tMap;
 
 	positionT *tPosition = (positionT*)malloc(sizeof(positionT));
 
 	int nrKeys = 0;
+	int nrPoints = 0;
 	int x = 0;
 	int y = 0;
 	char selector;
 	tMap = createMap(width, height, walls);
+
+	placeObject(tMap, x, y, 'P', tPosition, 1);
+	placeObject(tMap, x, y, 'P', tPosition, 1);
+	placeObject(tMap, x, y, 'P', tPosition, 1);
+	placeObject(tMap, x, y, 'P', tPosition, 1);
+	placeObject(tMap, x, y, 'P', tPosition, 1);
+	placeObject(tMap, x, y, 'P', tPosition, 1);
+	placeObject(tMap, x, y, 'P', tPosition, 1);
+	placeObject(tMap, x, y, 'P', tPosition, 1);
+	placeObject(tMap, x, y, 'P', tPosition, 1);
 	placeObject(tMap, x, y, '@', tPosition, 1);
+	
+
 	
 
 
@@ -25,7 +40,8 @@ int main(void)
 	{
 		
 		system("cls");
-		printf("%d", nrKeys);
+		printf("Antal nycklar %d \n", nrKeys);
+		printf("Antal poäng %d", nrPoints);
 		drawMap(tMap);
 		
 		selector = getchar();
@@ -37,6 +53,9 @@ int main(void)
 
 			door = placeObject(tMap, tPosition->row - 1, tPosition->col, '@', tPosition, 1);
 			key = door;
+			points = key;
+			master = points;
+			
 			if (key == 'K')
 			{
 
@@ -61,6 +80,16 @@ int main(void)
 					getchar();
 				}
 			}
+			else if (points == 'P')
+			{
+				doorMover(tMap, tPosition->row - 1, tPosition->col, '@', tPosition, 1);
+
+				printf("Du fick ett poäng");
+				nrPoints++;
+				getchar();
+
+			}
+
 			removeObject(tMap, tPosition->row + 1, tPosition->col, ' ', tPosition, 1);
 			
 			break;
@@ -162,6 +191,20 @@ int main(void)
 					getchar();
 					getchar();
 				}
+			}
+			else if (master == 'M')
+			{
+				if (nrPoints == 9)
+				{
+					doorMover(tMap, tPosition->row + 1, tPosition->col, '@', tPosition, 1);
+					
+					printf("Du har vunnit spelet");
+				}
+				else 
+				{
+					printf("Du har inte tillräckligt med poäng, samla fler");
+				}
+
 			}
 
 			removeObject(tMap, tPosition->row - 1, tPosition->col, ' ', tPosition, 1);
