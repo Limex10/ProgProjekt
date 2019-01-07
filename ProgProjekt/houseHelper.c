@@ -22,6 +22,29 @@ int  placeObject(MapT tMap, int row, int col, char chObj, positionT *pos, int vi
 			col = rand() % (tMap.width - 2) + 1;
 		} 
 	}
+	if (tMap.mArr[row][col] == 'K')
+	{
+		tMap.mArr[row][col] = chObj;
+		tMap.vArr[row][col] = visibility;
+		pos->row = row;
+		pos->col = col;
+		return 'K';
+	}
+	if (tMap.mArr[row][col] == 'D')
+	{
+		
+		return 'D';
+	}
+	if (tMap.mArr[row][col] == 'P')
+	{
+
+		return 'P';
+	}
+	if (tMap.mArr[row][col] == 'M')
+	{
+
+		return 'M';
+	}
 	if (tMap.mArr[row][col] != ' ')
 		return 0;
 	tMap.mArr[row][col] = chObj;
@@ -49,6 +72,26 @@ int  removeObject(MapT tMap, int row, int col, char chObj, positionT *pos, int v
 	pos->col = col;*/
 	return 0;
 }
+
+int  doorMover(MapT tMap, int row, int col, char chObj, positionT *pos, int visibility)
+{
+
+	if (row < 0 || row > tMap.heigth - 1 || col < 0 || col > tMap.width - 1) //Outside housemap
+		return 0;
+	if (row == 0 && col == 0) { //Select random values for row and col
+		for (int i = 0; i < 100 && tMap.mArr[row][col] != ' '; i++) {
+			row = rand() % (tMap.heigth - 2) + 1;
+			col = rand() % (tMap.width - 2) + 1;
+		}
+	}
+
+	tMap.mArr[row][col] = chObj;
+	tMap.vArr[row][col] = visibility;
+	pos->row = row;
+	pos->col = col;
+	return 0;
+}
+
 
 
 inputT getUserInput(void)
