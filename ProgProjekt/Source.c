@@ -194,7 +194,7 @@ int main(void)
 			}
 			else if (master == 'M')
 			{
-				if (nrPoints == 9)
+				if (1 == 1)
 				{
 					doorMover(tMap, tPosition->row + 1, tPosition->col, '@', tPosition, 1);
 					
