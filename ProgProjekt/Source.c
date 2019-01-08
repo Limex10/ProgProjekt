@@ -27,13 +27,13 @@ int main(void)
 	placeObject(tMap, x, y, '@', tPosition, 1);
 	while (game == 1)
 	{
-
+		while ((getchar()) != '\n'); // for clearing the keyboard buffert.
 		system("cls");
 		printf("Antal nycklar %d \n", nrKeys);
 		printf("Antal poäng %d", nrPoints);
 		drawMap(tMap);
 		
-		while ((getchar()) != '\n'); // for clearing the keyboard buffert.
+		
 
 		selector = getchar();
 		switch (selector)
@@ -49,7 +49,6 @@ int main(void)
 				printf("du har hittat en nyckel");
 				nrKeys++;
 				getchar();
-				getchar();
 			}
 			else if (object == 'D') // for opening doors
 			{
@@ -60,14 +59,11 @@ int main(void)
 					printf("du har låst upp en dörr");
 					nrKeys--;
 					getchar();
-					getchar();
 				}
 				else // when you do not  have enough keys.
 				{
 					printf("du har inte nog med nycklar");
-					getchar();
-					getchar();
-				}
+					getchar();				}
 			}
 			else if (object == 'P') // function for picking upp keys.
 			{
@@ -76,8 +72,13 @@ int main(void)
 				printf("Du fick ett poäng");
 				nrPoints++;
 				getchar();
-				getchar();
 
+			}
+			else if(object == 'e')
+			{
+				printf("du har stött på en vägg");
+				getchar();
+				
 			}
 			else if (object == 'M') // for exiting the main entrance.
 			{
@@ -93,7 +94,6 @@ int main(void)
 				else  // not enough points to win.
 				{
 					printf("Du har inte tillräckligt med poäng, samla fler");
-					getchar();
 					getchar();
 				}
 			}
@@ -113,7 +113,6 @@ int main(void)
 				printf("du har hittat en nyckel");
 				nrKeys++;
 				getchar();
-				getchar();
 			}
 			else if (object == 'D')
 			{
@@ -124,14 +123,17 @@ int main(void)
 					printf("du har låst upp en dörr");
 					nrKeys--;
 					getchar();
-					getchar();
 				}
 				else
 				{
 					printf("du har inte nog med nycklar");
 					getchar();
-					getchar();
 				}
+			}
+			else if (object == 'e')
+			{
+				printf("du har stött på en vägg");
+				getchar();
 			}
 			else if (object == 'P')
 			{
@@ -139,7 +141,6 @@ int main(void)
 
 				printf("Du fick ett poäng");
 				nrPoints++;
-				getchar();
 				getchar();
 
 			}
@@ -157,7 +158,6 @@ int main(void)
 				else
 				{
 					printf("Du har inte tillräckligt med poäng, samla fler");
-					getchar();
 					getchar();
 				}
 			}
@@ -177,7 +177,6 @@ int main(void)
 				printf("du har hittat en nyckel");
 				nrKeys++;
 				getchar();
-				getchar();
 			}
 			else if (object == 'D')
 			{
@@ -188,14 +187,18 @@ int main(void)
 					printf("du har låst upp en dörr");
 					nrKeys--;
 					getchar();
-					getchar();
 				}
 				else
 				{
 					printf("du har inte nog med nycklar");
 					getchar();
-					getchar();
 				}
+				
+			}
+			else if (object == 'e')
+			{
+				printf("du har stött på en vägg");
+				getchar();
 				
 			}
 			else if (object == 'P')
@@ -204,7 +207,6 @@ int main(void)
 
 				printf("Du fick ett poäng");
 				nrPoints++;
-				getchar();
 				getchar();
 
 			}
@@ -222,7 +224,6 @@ int main(void)
 				else
 				{
 					printf("Du har inte tillräckligt med poäng, samla fler");
-					getchar();
 					getchar();
 				}
 			}
@@ -242,7 +243,6 @@ int main(void)
 				printf("du har hittat en nyckel");
 				nrKeys++;
 				getchar();
-				getchar();
 			}
 			else if (object == 'D')
 			{
@@ -253,14 +253,17 @@ int main(void)
 					printf("du har låst upp en dörr");
 					nrKeys--;
 					getchar();
-					getchar();
 				}
 				else
 				{
 					printf("du har inte nog med nycklar");
 					getchar();
-					getchar();
 				}
+			}
+			else if (object == 'e')
+			{
+				printf("du har stött på en vägg");
+				getchar();
 			}
 			else if (object == 'P')
 			{
@@ -268,7 +271,6 @@ int main(void)
 
 				printf("Du fick ett poäng");
 				nrPoints++;
-				getchar();
 				getchar();
 
 			}
@@ -286,7 +288,6 @@ int main(void)
 				else 
 				{
 					printf("Du har inte tillräckligt med poäng, samla fler");
-					getchar();
 					getchar();
 				}
 			}
