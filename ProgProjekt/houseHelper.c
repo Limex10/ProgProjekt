@@ -58,18 +58,11 @@ int  removeObject(MapT tMap, int row, int col, char chObj, positionT *pos, int v
 {
 	if (row < 0 || row > tMap.heigth - 1 || col < 0 || col > tMap.width - 1) //Outside housemap
 		return 0;
-	if (row == 0 && col == 0) { //Select random values for row and col
-		for (int i = 0; i < 100 && tMap.mArr[row][col] != ' '; i++) {
-			row = rand() % (tMap.heigth - 2) + 1;
-			col = rand() % (tMap.width - 2) + 1;
-		}
-	}
 	if (tMap.mArr[row][col] == ' ')
 		return 1;
 	tMap.mArr[row][col] = chObj;
 	tMap.vArr[row][col] = visibility;
-	/*pos->row = row;
-	pos->col = col;*/
+
 	return 0;
 }
 

@@ -3,13 +3,12 @@
 
 int main(void)
 {
+	system("chcp 1252");
 	int width = 20;
 	int height = 20;
 	int walls = 10;
-	char door = ' ';
-	char key = ' ';
-	char points = ' ';
-	char master = ' ';
+	char object = ' ';
+	int game = 1;
 	MapT tMap;
 
 	positionT *tPosition = (positionT*)malloc(sizeof(positionT));
@@ -21,29 +20,21 @@ int main(void)
 	char selector;
 	tMap = createMap(width, height, walls);
 
-	placeObject(tMap, x, y, 'P', tPosition, 1);
-	placeObject(tMap, x, y, 'P', tPosition, 1);
-	placeObject(tMap, x, y, 'P', tPosition, 1);
-	placeObject(tMap, x, y, 'P', tPosition, 1);
-	placeObject(tMap, x, y, 'P', tPosition, 1);
-	placeObject(tMap, x, y, 'P', tPosition, 1);
-	placeObject(tMap, x, y, 'P', tPosition, 1);
-	placeObject(tMap, x, y, 'P', tPosition, 1);
-	placeObject(tMap, x, y, 'P', tPosition, 1);
-	placeObject(tMap, x, y, '@', tPosition, 1);
-	
-
-	
-
-
-	while (1)
+	for (int i = 0; i < 9; i++)
 	{
-		
+		placeObject(tMap, x, y, 'P', tPosition, 1);
+	}
+	placeObject(tMap, x, y, '@', tPosition, 1);
+	while (game == 1)
+	{
+
 		system("cls");
 		printf("Antal nycklar %d \n", nrKeys);
 		printf("Antal poäng %d", nrPoints);
 		drawMap(tMap);
 		
+		while ((getchar()) != '\n'); // for clearing the keyboard buffert.
+
 		selector = getchar();
 		switch (selector)
 		{
@@ -51,46 +42,62 @@ int main(void)
 		case 'w':
 		{
 
-			door = placeObject(tMap, tPosition->row - 1, tPosition->col, '@', tPosition, 1);
-			key = door;
-			points = key;
-			master = points;
-			
-			if (key == 'K')
+			object = placeObject(tMap, tPosition->row - 1, tPosition->col, '@', tPosition, 1); // giving the var a char.
+	
+			if (object == 'K') // for picking up keys.
 			{
-
 				printf("du har hittat en nyckel");
 				nrKeys++;
 				getchar();
+				getchar();
 			}
-			else if (door == 'D')
+			else if (object == 'D') // for opening doors
 			{
-				if (nrKeys > 0)
+				if (nrKeys > 0) // more than 0 keys to open doors.
 				{
-					doorMover(tMap, tPosition->row - 1, tPosition->col, '@', tPosition, 1);
+					doorMover(tMap, tPosition->row - 1, tPosition->col, '@', tPosition, 1); // function to move kermit to a door location.
 
 					printf("du har låst upp en dörr");
 					nrKeys--;
 					getchar();
+					getchar();
 				}
-				else
+				else // when you do not  have enough keys.
 				{
 					printf("du har inte nog med nycklar");
 					getchar();
 					getchar();
 				}
 			}
-			else if (points == 'P')
+			else if (object == 'P') // function for picking upp keys.
 			{
 				doorMover(tMap, tPosition->row - 1, tPosition->col, '@', tPosition, 1);
 
 				printf("Du fick ett poäng");
 				nrPoints++;
 				getchar();
+				getchar();
 
 			}
+			else if (object == 'M') // for exiting the main entrance.
+			{
+				if (nrPoints == 9)
+				{
+					doorMover(tMap, tPosition->row - 1, tPosition->col, '@', tPosition, 1);
 
-			removeObject(tMap, tPosition->row + 1, tPosition->col, ' ', tPosition, 1);
+					printf("Du har vunnit spelet");
+					getchar();
+					getchar();
+					game = 0;
+				}
+				else  // not enough points to win.
+				{
+					printf("Du har inte tillräckligt med poäng, samla fler");
+					getchar();
+					getchar();
+				}
+			}
+			removeObject(tMap, tPosition->row + 1, tPosition->col, ' ', tPosition, 1); //Removing the "Shadow" of kermit.
 			
 			break;
 		}
@@ -98,16 +105,17 @@ int main(void)
 		case 'a':
 		{	
 
-			door = placeObject(tMap, tPosition->row, tPosition->col - 1, '@', tPosition, 1);
-			key = door;
-			if (key == 'K')
+			object = placeObject(tMap, tPosition->row, tPosition->col - 1, '@', tPosition, 1);
+
+			if (object == 'K')
 			{
 
 				printf("du har hittat en nyckel");
 				nrKeys++;
 				getchar();
+				getchar();
 			}
-			else if (door == 'D')
+			else if (object == 'D')
 			{
 				if (nrKeys > 0)
 				{
@@ -116,10 +124,39 @@ int main(void)
 					printf("du har låst upp en dörr");
 					nrKeys--;
 					getchar();
+					getchar();
 				}
 				else
 				{
 					printf("du har inte nog med nycklar");
+					getchar();
+					getchar();
+				}
+			}
+			else if (object == 'P')
+			{
+				doorMover(tMap, tPosition->row, tPosition->col - 1, '@', tPosition, 1);
+
+				printf("Du fick ett poäng");
+				nrPoints++;
+				getchar();
+				getchar();
+
+			}
+			else if (object == 'M')
+			{
+				if (nrPoints == 9)
+				{
+					doorMover(tMap, tPosition->row, tPosition->col - 1, '@', tPosition, 1);
+
+					printf("Du har vunnit spelet");
+					getchar();
+					getchar();
+					game = 0;
+				}
+				else
+				{
+					printf("Du har inte tillräckligt med poäng, samla fler");
 					getchar();
 					getchar();
 				}
@@ -132,16 +169,17 @@ int main(void)
 		case 'd':
 		{
 	
-				door = placeObject(tMap, tPosition->row, tPosition->col + 1, '@', tPosition, 1);
-				key = door;
-			if (key == 'K')
+				object = placeObject(tMap, tPosition->row, tPosition->col + 1, '@', tPosition, 1);
+
+			if (object == 'K')
 			{
 
 				printf("du har hittat en nyckel");
 				nrKeys++;
 				getchar();
+				getchar();
 			}
-			else if (door == 'D')
+			else if (object == 'D')
 			{
 				if(nrKeys > 0)
 				{
@@ -149,6 +187,7 @@ int main(void)
 
 					printf("du har låst upp en dörr");
 					nrKeys--;
+					getchar();
 					getchar();
 				}
 				else
@@ -159,6 +198,35 @@ int main(void)
 				}
 				
 			}
+			else if (object == 'P')
+			{
+				doorMover(tMap, tPosition->row, tPosition->col + 1, '@', tPosition, 1);
+
+				printf("Du fick ett poäng");
+				nrPoints++;
+				getchar();
+				getchar();
+
+			}
+			else if (object == 'M')
+			{
+				if (nrPoints == 9)
+				{
+					doorMover(tMap, tPosition->row, tPosition->col + 1, '@', tPosition, 1);
+
+					printf("Du har vunnit spelet");
+					getchar();
+					getchar();
+					game = 0;
+				}
+				else
+				{
+					printf("Du har inte tillräckligt med poäng, samla fler");
+					getchar();
+					getchar();
+				}
+			}
+
 			removeObject(tMap, tPosition->row, tPosition->col - 1, ' ', tPosition, 1);
 			break;
 		}
@@ -166,16 +234,17 @@ int main(void)
 		case 's':
 		{
 
-			door = placeObject(tMap, tPosition->row + 1, tPosition->col , '@', tPosition, 1);
-			key = door;
-			if (key == 'K')
+			object = placeObject(tMap, tPosition->row + 1, tPosition->col , '@', tPosition, 1);
+
+			if (object == 'K')
 			{
 
 				printf("du har hittat en nyckel");
 				nrKeys++;
 				getchar();
+				getchar();
 			}
-			else if (door == 'D')
+			else if (object == 'D')
 			{
 				if (nrKeys > 0)
 				{
@@ -183,6 +252,7 @@ int main(void)
 
 					printf("du har låst upp en dörr");
 					nrKeys--;
+					getchar();
 					getchar();
 				}
 				else
@@ -192,19 +262,33 @@ int main(void)
 					getchar();
 				}
 			}
-			else if (master == 'M')
+			else if (object == 'P')
 			{
-				if (1 == 1)
+				doorMover(tMap, tPosition->row + 1, tPosition->col, '@', tPosition, 1);
+
+				printf("Du fick ett poäng");
+				nrPoints++;
+				getchar();
+				getchar();
+
+			}
+			else if (object == 'M')
+			{
+				if (nrPoints == 9)
 				{
 					doorMover(tMap, tPosition->row + 1, tPosition->col, '@', tPosition, 1);
 					
 					printf("Du har vunnit spelet");
+					getchar();
+					getchar();
+					game = 0;
 				}
 				else 
 				{
 					printf("Du har inte tillräckligt med poäng, samla fler");
+					getchar();
+					getchar();
 				}
-
 			}
 
 			removeObject(tMap, tPosition->row - 1, tPosition->col, ' ', tPosition, 1);
@@ -215,9 +299,6 @@ int main(void)
 		default:
 			break;
 		}
-
-
-		
 	}
 
 	return 0;
